@@ -1,0 +1,5 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -p nix-prefetch-git -i /bin/sh
+repo="$1"
+ref="$2"
+nix-prefetch-git --url "$repo" --rev "$(./_get_ref_commithash "$repo" "$ref")"
