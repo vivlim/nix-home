@@ -178,6 +178,42 @@
             overlayModule
           ];
         };
+        "vivlim@vix" = home-manager.lib.homeManagerConfiguration rec {
+          system = "x86_64-linux";
+          extraSpecialArgs = {
+            inherit nixpkgs;
+            inherit home-manager;
+            inherit system;
+            inherit nil;
+            inherit mastodon-archive;
+            bonusShellAliases = {
+              nixrb = nixHomeManagerRebuildCommand {
+                configName = "vivlim@gui";
+                repoPath = "/home/vivlim/git/nix-home";
+                extraOptions = [ "--impure" ];
+                prefix = "NIXPKGS_ALLOW_UNFREE=1 ";
+              };
+            };
+          };
+          configuration = ./modules/shell.nix;
+          homeDirectory = "/home/vivlim";
+          username = "vivlim";
+          extraModules = [
+            ./modules/editors_nvim.nix
+            ./modules/editors_helix.nix
+            ./modules/dev_nix.nix
+            ./modules/lsp_nil.nix
+            ./modules/gui_chat.nix
+            ./modules/gui_media.nix
+            ./modules/gui_misc.nix
+            ./modules/notes_sync.nix
+            ./modules/notes_dav.nix
+            overlayModule
+            ({ mastodon-archive, system, ... }: {
+              home.packages = [ mastodon-archive.defaultPackage.${system} ];
+            })
+          ];
+        };
         "vivlim@gui" = home-manager.lib.homeManagerConfiguration rec {
           system = "x86_64-linux";
           extraSpecialArgs = {
