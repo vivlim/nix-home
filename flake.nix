@@ -113,7 +113,7 @@
               bonusShellAliases = {
                 nixrb = nixHomeManagerRebuildCommand {
                   configName = "vivlim@icebreaker-prime";
-                  repoPath = "/home/vivlim/git/nix";
+                  repoPath = "/home/vivlim/git/nix-home";
                   #extraOptions = [ "--impure" ]; # required for nixGLNvidia
                   #prefix =
                     #"NIXPKGS_ALLOW_UNFREE=1 ";
@@ -139,7 +139,7 @@
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@generic-nixos";
-                repoPath = "/home/vivlim/git/nix";
+                repoPath = "/home/vivlim/git/nix-home";
               };
             };
           };
@@ -163,7 +163,7 @@
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@dev";
-                repoPath = "/home/vivlim/git/nix";
+                repoPath = "/home/vivlim/git/nix-home";
               };
             };
           };
@@ -189,7 +189,7 @@
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@gui";
-                repoPath = "/home/vivlim/git/nix";
+                repoPath = "/home/vivlim/git/nix-home";
                 extraOptions = [ "--impure" ];
                 prefix = "NIXPKGS_ALLOW_UNFREE=1 ";
               };
@@ -222,7 +222,7 @@
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@macaroni-tome";
-                repoPath = "/Users/vivlim/git/nix";
+                repoPath = "/Users/vivlim/git/nix-home";
               };
             };
           };
