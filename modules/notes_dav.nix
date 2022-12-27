@@ -46,10 +46,11 @@
 
           create_full_put_path  on;
           dav_access            group:rw  all:r;
-          allow 127.0.0.1;
-          deny all;
           
           autoindex on;
+
+          #allow 127.0.0.1;
+          #deny all;
 
           #limit_except GET {
           #    allow 192.168.1.0/32;
