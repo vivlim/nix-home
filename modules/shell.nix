@@ -98,7 +98,9 @@
 
     # interactive shell init commands
     initExtra = ''
-      command -v starship &> /dev/null && eval "$(starship init bash)"
+      if [ x"$\{STARSHIP_SUPPRESS\}" == "x" ]; then
+        command -v starship &> /dev/null && eval "$(starship init bash)"
+      fi
     '';
 
     # login shell init commands
@@ -110,6 +112,13 @@
     '';
   };
   programs.zsh = { enable = true; };
+
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true; # do this ourselves in bash initExtra.
+    settings = {
+    };
+  };
 
   home.shellAliases = { sentinel = "echo $SENTINEL"; } // bonusShellAliases;
 

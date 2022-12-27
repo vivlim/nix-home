@@ -65,7 +65,7 @@
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@icebreaker-prime";
-                repoPath = "/home/vivlim/git/nix";
+                repoPath = "/home/vivlim/git/nix-home";
                 extraOptions = [ "--impure" ];
                 prefix = "NIXPKGS_ALLOW_UNFREE=1 ";
               };
@@ -77,12 +77,18 @@
           extraModules = [
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
+            ./modules/editors_spacemacs.nix
             ./modules/dev_nix.nix
             ./modules/lsp_nil.nix
+            ./modules/gui_art.nix
             ./modules/gui_chat.nix
+            ./modules/gui_dev.nix
             ./modules/gui_media.nix
             ./modules/gui_misc.nix
-            ./modules/gui_plasma_config.nix # captured using `nix run github:pjones/plasma-manager`
+            ./modules/notes_sync.nix
+            ./modules/notes_dav.nix
+            ./plasma
+            ./plasma/plasma-manager-config.nix # captured using `nix run github:pjones/plasma-manager`
             plasma-manager.homeManagerModules.plasma-manager
             overlayModule
             ({ mastodon-archive, system, ... }: {
