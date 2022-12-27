@@ -188,7 +188,7 @@
             inherit mastodon-archive;
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
-                configName = "vivlim@gui";
+                configName = "vivlim@vix";
                 repoPath = "/home/vivlim/git/nix-home";
                 extraOptions = [ "--impure" ];
                 prefix = "NIXPKGS_ALLOW_UNFREE=1 ";
