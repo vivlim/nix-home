@@ -208,6 +208,7 @@
             ./modules/gui_misc.nix
             ./modules/notes_sync.nix
             ./modules/notes_dav.nix
+            ./modules/syncthing.nix
             overlayModule
             ({ mastodon-archive, system, ... }: {
               home.packages = [ mastodon-archive.defaultPackage.${system} ];
