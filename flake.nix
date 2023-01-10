@@ -87,6 +87,7 @@
             ./modules/gui_misc.nix
             ./modules/notes_sync.nix
             ./modules/notes_dav.nix
+            ./modules/syncthing.nix
             ./plasma
             ./plasma/plasma-manager-config.nix # captured using `nix run github:pjones/plasma-manager`
             plasma-manager.homeManagerModules.plasma-manager
