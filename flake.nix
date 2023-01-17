@@ -85,7 +85,7 @@
             ./modules/gui_dev.nix
             ./modules/gui_media.nix
             ./modules/gui_misc.nix
-            ./modules/notes_sync.nix
+            #./modules/notes_sync.nix
             ./modules/notes_dav.nix
             ./modules/syncthing.nix
             ./plasma
@@ -242,7 +242,7 @@
             ./modules/gui_chat.nix
             ./modules/gui_media.nix
             ./modules/gui_misc.nix
-            ./modules/notes_sync.nix
+            #./modules/notes_sync.nix
             ./modules/notes_dav.nix
             ./modules/syncthing.nix
             overlayModule
