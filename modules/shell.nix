@@ -109,6 +109,9 @@
     # bashrc init commands (run even in non-interactive shells)
     bashrcExtra = ''
       export SENTINEL=heya
+
+      # not sure why this is missing on some machines, but it shouldn't hurt to add it
+      export PATH=$HOME/.nix-profile/bin:$PATH
     '';
   };
   programs.zsh = { enable = true; };
