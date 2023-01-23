@@ -84,7 +84,7 @@
     fi
 
     mkdir -p ~/.tmp
-    export tmp_dir=$(mktemp -d -p ~/.tmp nginx-webdav.XXXXXXXX)
+    export tmp_dir=$(${pkgs.mktemp}/bin/mktemp -d -p ~/.tmp nginx-webdav.XXXXXXXX)
     echo "using tmp_dir: $tmp_dir"
 
     if [[ -f "$HOME/.nginx-webdav-ssl.crt" && "$HOME/.nginx-webdav-ssl.key" ]]; then
