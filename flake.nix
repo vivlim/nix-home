@@ -237,6 +237,7 @@
           extraModules = [
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
+            ./modules/editors_spacemacs.nix
             ./modules/dev_nix.nix
             ./modules/lsp_nil.nix
             ./modules/gui_chat.nix
