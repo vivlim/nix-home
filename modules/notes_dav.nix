@@ -13,8 +13,8 @@
         listen 4122 ssl default_server; # 4=D 1=A 22=V
         listen [::]:4122 ssl default_server;
 
-        ssl_certificate $tmp_dir/selfsigned.crt;
-        ssl_certificate_key $tmp_dir/selfsigned.key;
+        ssl_certificate $SSL_CERT;
+        ssl_certificate_key $SSL_KEY;
 
         access_log $tmp_dir/access.log;
         client_body_temp_path $tmp_dir/client_body_temp;
@@ -84,15 +84,24 @@
     fi
 
     mkdir -p ~/.tmp
-    export tmp_dir=$(mktemp -d -p ~/.tmp nginx-webdav.XXXXXXXX)
+    export tmp_dir=$(${pkgs.mktemp}/bin/mktemp -d -p ~/.tmp nginx-webdav.XXXXXXXX)
     echo "using tmp_dir: $tmp_dir"
 
-    echo "generate ephemeral ssl certs"
-    ${pkgs.openssl}/bin/openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $tmp_dir/selfsigned.key -out $tmp_dir/selfsigned.crt -subj "/C=US/O=viv ephemeral selfsigned cert/CN=localhost"
+    if [[ -f "$HOME/.nginx-webdav-ssl.crt" && "$HOME/.nginx-webdav-ssl.key" ]]; then
+      export SSL_CERT="$HOME/.nginx-webdav-ssl.crt"
+      export SSL_KEY="$HOME/.nginx-webdav-ssl.key"
+      echo "use $SSL_CERT and $SSL_KEY"
+    else
+      echo "generate ephemeral ssl certs"
+      ${pkgs.openssl}/bin/openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $tmp_dir/selfsigned.key -out $tmp_dir/selfsigned.crt -subj "/C=US/O=viv ephemeral selfsigned cert/CN=localhost"
+      export SSL_CERT="$tmp_dir/selfsigned.crt"
+      export SSL_KEY="$tmp_dir/selfsigned.key"
+    fi
+
 
     echo "patch config file to inject environment vars"
     # only the vars specified below will be injected
-    ${pkgs.gettext}/bin/envsubst \$tmp_dir,\$HTPASS,\$HOME,\$ALLOWED_ORIGIN < ${config} > $tmp_dir/nginx.cfg
+    ${pkgs.gettext}/bin/envsubst \$tmp_dir,\$HTPASS,\$HOME,\$ALLOWED_ORIGIN,\$SSL_CERT,\$SSL_KEY < ${config} > $tmp_dir/nginx.cfg
 
     ${pkgs.nginx}/bin/nginx -c $tmp_dir/nginx.cfg -e stderr -p $tmp_dir
   '';

@@ -5,8 +5,12 @@
       "notes" = {
         interval = 500; # seconds
         path = "/home/vivlim/notes";
-        uri = "file:///dev/null"; # clone it manually
+        uri = "vivlim@vix.cow-bebop.ts.net:notes.git";
       };
     };
   };
+
+  home.packages = with pkgs; [
+    git-sync
+  ];
 }
