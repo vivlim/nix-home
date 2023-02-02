@@ -304,6 +304,7 @@
           homeDirectory = "/Users/vivlim";
           username = "vivlim";
           extraModules = [
+            ./mac.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
             ./modules/dev_nix.nix
