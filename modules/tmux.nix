@@ -15,7 +15,7 @@ in {
       ./dotfiles/tmux/bindings.conf
       ./dotfiles/tmux/clipboard_osc52.conf
       ./dotfiles/tmux/mouse.conf
-      ./dotfiles/tmux/style_basic.conf
+      ./dotfiles/tmux/style_catppuccin_mocha.conf
     ];
   };
 }
