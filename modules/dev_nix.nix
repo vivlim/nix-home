@@ -3,5 +3,6 @@
     pkgs.rnix-lsp
     pkgs.nix-prefetch-github
     pkgs.git-crypt
+    pkgs.nixfmt
   ];
 }
