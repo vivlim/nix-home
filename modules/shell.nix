@@ -1,19 +1,21 @@
 { pkgs, lib, system, bonusShellAliases ? {}, ... }: {
-  home.packages = [
-    pkgs.htop
-    pkgs.fd
-    pkgs.nix-prefetch
-    pkgs.sops
-    pkgs.nixfmt
-    pkgs.starship
-    pkgs.tmate
-    pkgs.ripgrep
-    pkgs.ncdu
-    pkgs.p7zip
-    pkgs.git
-    pkgs.gitui
-    pkgs.tldr
-    pkgs.visidata
+  home.packages = with pkgs; [
+    htop
+    fd
+    nix-prefetch
+    sops
+    nixfmt
+    starship
+    tmate
+    ripgrep
+    ncdu
+    p7zip
+    git
+    gitui
+    tldr
+    visidata
+    nushell
+    pueue
   ];
   programs.git = {
     enable = true;
