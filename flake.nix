@@ -75,6 +75,7 @@
           homeDirectory = "/home/vivlim";
           username = "vivlim";
           extraModules = [
+            ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
             ./modules/editors_spacemacs.nix
@@ -125,6 +126,7 @@
             homeDirectory = "/home/vivlim";
             username = "vivlim";
             extraModules = [
+              ./modules/tmux.nix
               ./modules/editors_nvim.nix
               ./modules/editors_helix.nix
               ./modules/nixgl.nix
@@ -159,6 +161,7 @@
             homeDirectory = "/home/vivlim";
             username = "vivlim";
             extraModules = [
+              ./modules/tmux.nix
               ./modules/editors_nvim.nix
               ./modules/editors_helix.nix
               ./modules/nixgl.nix
@@ -183,6 +186,7 @@
           homeDirectory = "/home/vivlim";
           username = "vivlim";
           extraModules = [
+            ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
             ./modules/dev_nix.nix
@@ -207,6 +211,7 @@
           homeDirectory = "/home/vivlim";
           username = "vivlim";
           extraModules = [
+            ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
             ./modules/dev_nix.nix
@@ -235,6 +240,7 @@
           homeDirectory = "/home/vivlim";
           username = "vivlim";
           extraModules = [
+            ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
             ./modules/editors_spacemacs.nix
@@ -273,6 +279,7 @@
           homeDirectory = "/home/vivlim";
           username = "vivlim";
           extraModules = [
+            ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
             ./modules/dev_nix.nix
@@ -304,10 +311,13 @@
           homeDirectory = "/Users/vivlim";
           username = "vivlim";
           extraModules = [
+            ./modules/tmux.nix
+            ./mac.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
             ./modules/dev_nix.nix
             ./modules/dev_racket.nix
+            #./modules/notes_sync_mac.nix
             overlayModule
           ];
         };

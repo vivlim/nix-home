@@ -1,19 +1,21 @@
 { pkgs, lib, system, bonusShellAliases ? {}, ... }: {
-  home.packages = [
-    pkgs.htop
-    pkgs.fd
-    pkgs.nix-prefetch
-    pkgs.sops
-    pkgs.nixfmt
-    pkgs.starship
-    pkgs.tmate
-    pkgs.ripgrep
-    pkgs.ncdu
-    pkgs.p7zip
-    pkgs.git
-    pkgs.gitui
-    pkgs.tldr
-    pkgs.visidata
+  home.packages = with pkgs; [
+    htop
+    fd
+    nix-prefetch
+    sops
+    nixfmt
+    starship
+    tmate
+    ripgrep
+    ncdu
+    p7zip
+    git
+    gitui
+    tldr
+    visidata
+    nushell
+    pueue
   ];
   programs.git = {
     enable = true;
@@ -24,48 +26,6 @@
         rebase = false;
       };
     };
-  };
-  programs.tmux = {
-    enable = true;
-    baseIndex = 1;
-    historyLimit = 5000;
-    keyMode = "vi";
-    prefix = "C-a";
-    terminal = "screen-256color";
-    extraConfig = ''
-      bind-key -T copy-mode-vi 'v' send -X begin-selection
-      bind-key -T copy-mode-vi 'y' send -X copy-selection-and-cancel
-
-      # switch panes using hjkl 
-      bind h select-pane -L
-      bind l select-pane -R
-      bind k select-pane -U
-      bind j select-pane -D
-
-      # resize 'em too
-      bind -r C-h resize-pane -L 3
-      bind -r C-l resize-pane -R 3
-      bind -r C-k resize-pane -U 3
-      bind -r C-j resize-pane -D 3
-
-      # these make more sense to me
-      bind / split-window -h
-      bind - split-window -v
-
-      bind r source-file ~/.config/tmux/tmux.conf
-
-      # escape key reaches editors sooner
-      set -s escape-time 30
-
-      # transparent status bar
-      set -g status-style bg=default
-
-      # why have i been torturing myself with no mouse support for so long
-      set -g mouse on
-
-      # set-clipboard on allows osc52 emitted from nvim to reach the attached terminal(s)
-      set -s set-clipboard on
-    '';
   };
   programs.nix-index = {
     enable = true;

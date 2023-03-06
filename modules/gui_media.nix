@@ -1,3 +1,13 @@
 { pkgs, system, channels, bonusShellAliases, ... }: {
-  home.packages = [ pkgs.obs-studio pkgs.ffmpeg pkgs.vlc pkgs.deadbeef pkgs.imagemagick pkgs.exiftool ];
+  home.packages = with pkgs; [
+    obs-studio
+    ffmpeg
+    vlc
+    deadbeef
+    imagemagick
+    exiftool
+    gimp
+    inkscape
+    audacity
+  ];
 }
