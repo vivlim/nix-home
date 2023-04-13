@@ -4,14 +4,14 @@
   # many iterations happened since 🙃
 
   inputs = { # update a single input; nix flake lock --update-input unstable
-    nixpkgs = { url = "github:NixOS/nixpkgs/release-22.05"; };
+    nixpkgs = { url = "github:NixOS/nixpkgs/release-22.11"; };
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-vivlim.url = "github:vivlim/nixpkgs/mastodon-fixes-on-unstable";
     #nixpkgs-vivlim.url = "path:/home/vivlim/git/viv_nixpkgs";
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager = {
-      url = "github:nix-community/home-manager/release-22.05";
+      url = "github:nix-community/home-manager/release-22.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     plasma-manager = {
@@ -26,14 +26,10 @@
     nil = { # nix language server
       url = "github:oxalica/nil#";
     };
-    mastodon-archive = {
-      url = "github:vivlim/mastodon-archive";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs@{ self, nixpkgs, unstable, nixpkgs-vivlim, home-manager, plasma-manager, sops-nix
-    , nixGL, nil, mastodon-archive, ... }:
+    , nixGL, nil, ... }:
     let
       # configuration = { pkgs, ... }: { nix.package = pkgs.nixflakes; }; # doesn't do anything?
       overlay = final: prev: {
@@ -61,7 +57,6 @@
             inherit home-manager;
             inherit system;
             inherit nil;
-            inherit mastodon-archive;
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@icebreaker-prime";
@@ -93,9 +88,6 @@
             ./plasma/plasma-manager-config.nix # captured using `nix run github:pjones/plasma-manager`
             plasma-manager.homeManagerModules.plasma-manager
             overlayModule
-            ({ mastodon-archive, system, ... }: {
-              home.packages = [ mastodon-archive.defaultPackage.${system} ];
-            })
           ];
         };
         "vivlim@icebreaker-prime-void" =
@@ -245,14 +237,17 @@
             overlayModule
           ];
         };
-        "vivlim@vix" = home-manager.lib.homeManagerConfiguration rec {
+        "vivlim@vix" = let
           system = "x86_64-linux";
+        in home-manager.lib.homeManagerConfiguration rec {
+          pkgs = import nixpkgs {
+            inherit system;
+          };
           extraSpecialArgs = {
             inherit nixpkgs;
             inherit home-manager;
             inherit system;
             inherit nil;
-            inherit mastodon-archive;
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@vix";
@@ -262,10 +257,13 @@
               };
             };
           };
-          configuration = ./modules/shell.nix;
-          homeDirectory = "/home/vivlim";
-          username = "vivlim";
-          extraModules = [
+          modules = [
+            ({...}: {
+              home.username = "vivlim";
+              home.homeDirectory = "/home/vivlim";
+              home.stateVersion = "22.11";
+            })
+            ./modules/shell.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
@@ -279,9 +277,6 @@
             ./modules/notes_dav.nix
             ./modules/syncthing.nix
             overlayModule
-            ({ mastodon-archive, system, ... }: {
-              home.packages = [ mastodon-archive.defaultPackage.${system} ];
-            })
           ];
         };
         "vivlim@gui" = home-manager.lib.homeManagerConfiguration rec {
@@ -291,7 +286,6 @@
             inherit home-manager;
             inherit system;
             inherit nil;
-            inherit mastodon-archive;
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@gui";
@@ -314,9 +308,6 @@
             ./modules/gui_media.nix
             ./modules/gui_misc.nix
             overlayModule
-            ({ mastodon-archive, system, ... }: {
-              home.packages = [ mastodon-archive.defaultPackage.${system} ];
-            })
           ];
         };
         "vivlim@macaroni-tome" = home-manager.lib.homeManagerConfiguration rec {
