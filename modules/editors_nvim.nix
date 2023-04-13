@@ -5,7 +5,7 @@
       if [[ -e $HOME/git/vimfiles/launch.sh ]]; then
         $HOME/git/vimfiles/launch.sh $@
       else
-        nvim $@
+        ${pkgs.neovim}/bin/nvim $@
       fi
     }
 
@@ -27,7 +27,7 @@ in {
 
   home.activation = {
     installNeovimPlugins = home-manager.lib.hm.dag.entryAfter ["writeBoundary"] ''
-      nvim +PlugInstall +qall
+      ${pkgs.neovim}/bin/nvim +PlugInstall +qall
     '';
   };
 
