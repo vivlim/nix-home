@@ -3,6 +3,8 @@
   # initial inspo: https://gitlab.com/rprospero/dotfiles/-/blob/master/flake.nix
   # many iterations happened since 🙃
 
+  # todo: clean up all configs - username / homedirectory move into a module, extraModules becomes modules. etc
+
   inputs = { # update a single input; nix flake lock --update-input unstable
     nixpkgs = { url = "github:NixOS/nixpkgs/release-22.11"; };
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -310,8 +312,12 @@
             overlayModule
           ];
         };
-        "vivlim@macaroni-tome" = home-manager.lib.homeManagerConfiguration rec {
+        "vivlim@macaroni-tome" = let
           system = "aarch64-darwin";
+        in home-manager.lib.homeManagerConfiguration rec {
+          pkgs = import nixpkgs {
+            inherit system;
+          };
           extraSpecialArgs = {
             inherit nixpkgs;
             inherit home-manager;
@@ -324,10 +330,13 @@
               };
             };
           };
-          configuration = ./modules/shell.nix;
-          homeDirectory = "/Users/vivlim";
-          username = "vivlim";
-          extraModules = [
+          modules = [
+            ({...}: {
+              home.username = "vivlim";
+              home.homeDirectory = "/Users/vivlim";
+              home.stateVersion = "22.11";
+            })
+            ./modules/shell.nix
             ./modules/tmux.nix
             ./mac.nix
             ./modules/editors_nvim.nix
