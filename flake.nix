@@ -343,6 +343,7 @@
             ./modules/editors_helix.nix
             ./modules/dev_nix.nix
             ./modules/dev_racket.nix
+            ./modules/dev_elixir.nix
             #./modules/notes_sync_mac.nix
             overlayModule
           ];
