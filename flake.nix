@@ -6,14 +6,14 @@
   # todo: clean up all configs - username / homedirectory move into a module, extraModules becomes modules. etc
 
   inputs = { # update a single input; nix flake lock --update-input unstable
-    nixpkgs = { url = "github:NixOS/nixpkgs/release-22.11"; };
+    nixpkgs = { url = "github:NixOS/nixpkgs/release-23.05"; };
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-vivlim.url = "github:vivlim/nixpkgs/mastodon-fixes-on-unstable";
     #nixpkgs-vivlim.url = "path:/home/vivlim/git/viv_nixpkgs";
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager = {
-      url = "github:nix-community/home-manager/release-22.11";
+      url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     plasma-manager = {
@@ -344,6 +344,7 @@
             ./modules/dev_nix.nix
             ./modules/dev_racket.nix
             ./modules/dev_elixir.nix
+            ./modules/kubernetes.nix
             #./modules/notes_sync_mac.nix
             overlayModule
           ];
