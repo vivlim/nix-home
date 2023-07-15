@@ -64,7 +64,10 @@
     '';
 
     # login shell init commands
-    profileExtra = "";
+    profileExtra = ''
+      # include .profile-mac if it exists
+      [[ -f ~/.profile-mac ]] && . ~/.profile-mac
+    '';
 
     # bashrc init commands (run even in non-interactive shells)
     bashrcExtra = ''
