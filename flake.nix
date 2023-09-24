@@ -345,6 +345,7 @@
             ./modules/dev_racket.nix
             ./modules/dev_elixir.nix
             ./modules/kubernetes.nix
+            ./modules/python.nix
             #./modules/notes_sync_mac.nix
             overlayModule
           ];

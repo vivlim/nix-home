@@ -16,6 +16,8 @@
     visidata
     nushell
     pueue
+    wget
+    jq
   ];
   programs.git = {
     enable = true;
@@ -109,6 +111,7 @@
   home.sessionPath = [
     "$HOME/bin"
     "$HOME/.cargo/bin"
+    "$HOME/.local/bin"
   ];
 
   home.sessionVariables = { LESS = "--mouse --wheel-lines=3 --RAW-CONTROL-CHARS"; };
