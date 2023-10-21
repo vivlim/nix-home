@@ -68,10 +68,12 @@
               };
             };
           };
-          configuration = ./modules/shell.nix;
+          configuration = ./modules/shell_immutable.nix;
           homeDirectory = "/home/vivlim";
           username = "vivlim";
           extraModules = [
+            ./modules/shell_common.nix
+            ./modules/core.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
@@ -116,10 +118,12 @@
                 };
               };
             };
-            configuration = ./modules/shell.nix;
+            configuration = ./modules/shell_immutable.nix;
             homeDirectory = "/home/vivlim";
             username = "vivlim";
             extraModules = [
+            ./modules/shell_common.nix
+            ./modules/core.nix
               ./modules/tmux.nix
               ./modules/editors_nvim.nix
               ./modules/editors_helix.nix
@@ -151,10 +155,12 @@
                 };
               };
             };
-            configuration = ./modules/shell.nix;
+            configuration = ./modules/shell_immutable.nix;
             homeDirectory = "/home/vivlim";
             username = "vivlim";
             extraModules = [
+            ./modules/shell_common.nix
+            ./modules/core.nix
               ./modules/tmux.nix
               ./modules/editors_nvim.nix
               ./modules/editors_helix.nix
@@ -176,10 +182,12 @@
               };
             };
           };
-          configuration = ./modules/shell.nix;
+          configuration = ./modules/shell_immutable.nix;
           homeDirectory = "/home/vivlim";
           username = "vivlim";
           extraModules = [
+            ./modules/shell_common.nix
+            ./modules/core.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
@@ -201,10 +209,12 @@
               };
             };
           };
-          configuration = ./modules/shell.nix;
+          configuration = ./modules/shell_immutable.nix;
           homeDirectory = "/home/vivlim";
           username = "vivlim";
           extraModules = [
+            ./modules/shell_common.nix
+            ./modules/core.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
@@ -227,10 +237,12 @@
               };
             };
           };
-          configuration = ./modules/shell.nix;
+          configuration = ./modules/shell_immutable.nix;
           homeDirectory = "/home/vivlim";
           username = "vivlim";
           extraModules = [
+            ./modules/shell_common.nix
+            ./modules/core.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
@@ -265,7 +277,9 @@
               home.homeDirectory = "/home/vivlim";
               home.stateVersion = "22.11";
             })
-            ./modules/shell.nix
+            ./modules/shell_common.nix
+            ./modules/core.nix
+            ./modules/shell_immutable.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
@@ -297,10 +311,12 @@
               };
             };
           };
-          configuration = ./modules/shell.nix;
+          configuration = ./modules/shell_immutable.nix;
           homeDirectory = "/home/vivlim";
           username = "vivlim";
           extraModules = [
+            ./modules/shell_common.nix
+            ./modules/core.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
@@ -336,7 +352,9 @@
               home.homeDirectory = "/Users/vivlim";
               home.stateVersion = "22.11";
             })
-            ./modules/shell.nix
+            ./modules/core.nix
+            ./modules/shell_common.nix
+            ./modules/shell_mutable.nix
             ./modules/tmux.nix
             ./mac.nix
             ./modules/editors_nvim.nix
