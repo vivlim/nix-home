@@ -1,4 +1,4 @@
-{ pkgs, lib, system, bonusShellAliases ? {}, ... }: let 
+{ pkgs, lib, system, config, bonusShellAliases ? {}, ... }: let 
   addLineIfNotPresent = file: line: pkgs.writeScript "updateFile" ''
     if [[ -f ${file} ]]; then
       LINE='${line}'
@@ -32,9 +32,12 @@ in {
     nix # Ensure that nix's bins will be in ~/.nix-profile/bin
   ];
   home.file.".nix_hm/nix_path" = {
-    text = ''
+    text = let
+      setSessionPaths = builtins.toString (builtins.map (p: "PATH=$PATH:${p}\n") config.home.sessionPath);
+    in ''
     # Ensure nix bins are in $PATH
     PATH=$HOME/.nix-profile/bin:$PATH
+    ${setSessionPaths}
     '';
   };
 

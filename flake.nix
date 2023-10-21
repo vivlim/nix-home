@@ -328,6 +328,38 @@
             overlayModule
           ];
         };
+        "vivlim@mutServer" = let
+          system = "x86_64-linux";
+        in home-manager.lib.homeManagerConfiguration rec {
+          pkgs = import nixpkgs {
+            inherit system;
+          };
+          extraSpecialArgs = {
+            inherit nixpkgs;
+            inherit home-manager;
+            inherit system;
+            inherit nil;
+            bonusShellAliases = {
+              nixrb = nixHomeManagerRebuildCommand {
+                configName = "vivlim@mutServer";
+                repoPath = "/home/vivlim/git/nix-home";
+              };
+            };
+          };
+          modules = [
+            ({...}: {
+              home.username = "vivlim";
+              home.homeDirectory = "/home/vivlim";
+              home.stateVersion = "22.11";
+            })
+            ./modules/shell_common.nix
+            ./modules/core.nix
+            ./modules/shell_mutable.nix
+            ./modules/tmux.nix
+            ./modules/editors_nvim.nix
+            overlayModule
+          ];
+        };
         "vivlim@macaroni-tome" = let
           system = "aarch64-darwin";
         in home-manager.lib.homeManagerConfiguration rec {

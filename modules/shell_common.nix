@@ -4,7 +4,6 @@
     fd
     nix-prefetch
     sops
-    nixfmt
     starship
     tmate
     ripgrep
@@ -13,9 +12,6 @@
     git
     gitui
     tldr
-    visidata
-    nushell
-    pueue
     wget
     jq
   ];
