@@ -216,7 +216,7 @@
           modules = [
             ({...}: {
               home.username = "vivlim";
-              home.homeDirectory = "/Users/vivlim";
+              home.homeDirectory = "/home/vivlim";
               home.stateVersion = "22.11";
             })
             ./modules/shell_common.nix
