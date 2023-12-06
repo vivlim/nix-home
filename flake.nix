@@ -78,6 +78,7 @@
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
             ./modules/editors_spacemacs.nix
+            ./modules/dev.nix
             ./modules/dev_nix.nix
             ./modules/lsp_nil.nix
             ./modules/gui_art.nix
@@ -191,6 +192,7 @@
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
+            ./modules/dev.nix
             ./modules/dev_nix.nix
             overlayModule
           ];
@@ -218,6 +220,7 @@
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
+            ./modules/dev.nix
             ./modules/dev_nix.nix
             ./modules/lsp_nil.nix
             overlayModule
@@ -246,6 +249,7 @@
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
+            ./modules/dev.nix
             ./modules/dev_nix.nix
             ./modules/lsp_nil.nix
             overlayModule
@@ -284,6 +288,7 @@
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
             ./modules/editors_spacemacs.nix
+            ./modules/dev.nix
             ./modules/dev_nix.nix
             ./modules/lsp_nil.nix
             ./modules/gui_chat.nix
@@ -320,6 +325,7 @@
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
+            ./modules/dev.nix
             ./modules/dev_nix.nix
             ./modules/lsp_nil.nix
             ./modules/gui_chat.nix
@@ -425,6 +431,7 @@
             ./mac.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
+            ./modules/dev.nix
             ./modules/dev_nix.nix
             ./modules/dev_racket.nix
             ./modules/dev_elixir.nix
