@@ -6,14 +6,14 @@
   # todo: clean up all configs - username / homedirectory move into a module, extraModules becomes modules. etc
 
   inputs = { # update a single input; nix flake lock --update-input unstable
-    nixpkgs = { url = "github:NixOS/nixpkgs/release-23.05"; };
+    nixpkgs = { url = "github:NixOS/nixpkgs/release-23.11"; };
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-vivlim.url = "github:vivlim/nixpkgs/mastodon-fixes-on-unstable";
     #nixpkgs-vivlim.url = "path:/home/vivlim/git/viv_nixpkgs";
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     plasma-manager = {
@@ -25,13 +25,10 @@
       url = "github:guibou/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nil = { # nix language server
-      url = "github:oxalica/nil#";
-    };
   };
 
   outputs = inputs@{ self, nixpkgs, unstable, nixpkgs-vivlim, home-manager, plasma-manager, sops-nix
-    , nixGL, nil, ... }:
+    , nixGL, ... }:
     let
       # configuration = { pkgs, ... }: { nix.package = pkgs.nixflakes; }; # doesn't do anything?
       overlay = final: prev: {
@@ -49,7 +46,18 @@
 
         in ''
           ${prefix} nix --extra-experimental-features nix-command --extra-experimental-features flakes build ${extraOptionsString} ${repoPath}#homeConfigurations."${configName}".activationPackage && ./result/activate && unlink ./result'';
+
     in {
+      devShells = let
+        devShellSupportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+        devShellForEachSupportedSystem = f: nixpkgs.lib.genAttrs devShellSupportedSystems (system: f {
+          pkgs = import nixpkgs { inherit system; };
+        });
+      in devShellForEachSupportedSystem ({ pkgs }: {
+        default = pkgs.mkShell {
+          packages = with pkgs; [ nil nixfmt ];
+        };
+      });
 
       homeConfigurations = {
         "vivlim@icebreaker-prime" = home-manager.lib.homeManagerConfiguration rec {
@@ -58,7 +66,6 @@
             inherit nixpkgs;
             inherit home-manager;
             inherit system;
-            inherit nil;
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@icebreaker-prime";
@@ -80,7 +87,6 @@
             ./modules/editors_spacemacs.nix
             ./modules/dev.nix
             ./modules/dev_nix.nix
-            ./modules/lsp_nil.nix
             ./modules/gui_art.nix
             ./modules/gui_chat.nix
             ./modules/gui_dev.nix
@@ -104,7 +110,6 @@
               inherit home-manager;
               inherit nixGL;
               inherit system;
-              #inherit nil;
               # channels = {
               #   inherit unstable;
               #   inherit nixpkgs;
@@ -141,11 +146,6 @@
               inherit home-manager;
               inherit nixGL;
               inherit system;
-              #inherit nil;
-              # channels = {
-              #   inherit unstable;
-              #   inherit nixpkgs;
-              # };
               bonusShellAliases = {
                 nixrb = nixHomeManagerRebuildCommand {
                   configName = "vivlim@quire";
@@ -203,7 +203,6 @@
             inherit nixpkgs;
             inherit home-manager;
             inherit system;
-            inherit nil;
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@dev";
@@ -222,7 +221,6 @@
             ./modules/editors_helix.nix
             ./modules/dev.nix
             ./modules/dev_nix.nix
-            ./modules/lsp_nil.nix
             overlayModule
           ];
         };
@@ -232,7 +230,6 @@
             inherit nixpkgs;
             inherit home-manager;
             inherit system;
-            inherit nil;
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@devarm";
@@ -251,7 +248,6 @@
             ./modules/editors_helix.nix
             ./modules/dev.nix
             ./modules/dev_nix.nix
-            ./modules/lsp_nil.nix
             overlayModule
           ];
         };
@@ -265,7 +261,6 @@
             inherit nixpkgs;
             inherit home-manager;
             inherit system;
-            inherit nil;
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@vix";
@@ -290,7 +285,6 @@
             ./modules/editors_spacemacs.nix
             ./modules/dev.nix
             ./modules/dev_nix.nix
-            ./modules/lsp_nil.nix
             ./modules/gui_chat.nix
             ./modules/gui_media.nix
             ./modules/gui_misc.nix
@@ -306,7 +300,6 @@
             inherit nixpkgs;
             inherit home-manager;
             inherit system;
-            inherit nil;
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@gui";
@@ -327,7 +320,6 @@
             ./modules/editors_helix.nix
             ./modules/dev.nix
             ./modules/dev_nix.nix
-            ./modules/lsp_nil.nix
             ./modules/gui_chat.nix
             ./modules/gui_media.nix
             ./modules/gui_misc.nix
@@ -344,7 +336,6 @@
             inherit nixpkgs;
             inherit home-manager;
             inherit system;
-            inherit nil;
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@mutServer";
@@ -376,10 +367,9 @@
             inherit nixpkgs;
             inherit home-manager;
             inherit system;
-            inherit nil;
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
-                configName = "vivlim@mutServer";
+                configName = "vivlim@mutClient";
                 repoPath = "/home/vivlim/git/nix-home";
               };
             };
@@ -391,12 +381,15 @@
               home.stateVersion = "22.11";
             })
             ./modules/shell_common.nix
+            ./modules/wayland.nix
             ./modules/core.nix
             ./modules/shell_mutable.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/xonsh.nix
             ./modules/powershell.nix
+            ./modules/dev.nix
+            ./modules/dev_nix.nix
             overlayModule
           ];
         };
@@ -410,7 +403,6 @@
             inherit nixpkgs;
             inherit home-manager;
             inherit system;
-            inherit nil;
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@macaroni-tome";

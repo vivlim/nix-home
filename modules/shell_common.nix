@@ -41,6 +41,7 @@
       if [ x"''${STARSHIP_SUPPRESS}" == "x" ]; then
         command -v starship &> /dev/null && eval "$(starship init bash)"
       fi
+      command -v direnv &> /dev/null && eval "$(direnv hook bash)"
     '';
   };
   home.file.".nix_hm/bash_profile" = {
