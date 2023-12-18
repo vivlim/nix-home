@@ -14,6 +14,7 @@
     tldr
     wget
     jq
+    jless
   ];
   programs.git = {
     enable = true;
