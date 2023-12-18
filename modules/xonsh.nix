@@ -1,6 +1,5 @@
-{ pkgs, lib, system, channels, bonusShellAliases, ... }: 
-{
+{ pkgs, lib, system, channels, bonusShellAliases, ... }: {
   home.packages = [
-    pkgs.xonsh
+    pkgs.xonsh-with-env
   ];
 }

@@ -34,10 +34,11 @@
       overlay = final: prev: {
         unstable = unstable.legacyPackages.${prev.system};
         nixpkgs-vivlim = nixpkgs-vivlim.legacyPackages.${prev.system};
-      };
+      } // (import ./modules/xonsh_override.nix prev);
+      overlays = [ overlay ];
       # make pkgs.unstable available in configuration.nix
       overlayModule =
-        ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay ]; });
+        ({ config, pkgs, ... }: { nixpkgs.overlays = overlays; });
 
       # builders for rebuild commands
       nixHomeManagerRebuildCommand =
@@ -51,12 +52,21 @@
       devShells = let
         devShellSupportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
         devShellForEachSupportedSystem = f: nixpkgs.lib.genAttrs devShellSupportedSystems (system: f {
-          pkgs = import nixpkgs { inherit system; };
+          pkgs = import nixpkgs { inherit system; inherit overlays; };
         });
       in devShellForEachSupportedSystem ({ pkgs }: {
         default = pkgs.mkShell {
           packages = with pkgs; [ nil nixfmt ];
         };
+      });
+
+      packages = let
+        pkgSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+        packagesForEachSystem = f: nixpkgs.lib.genAttrs pkgSystems (system: f {
+          pkgs = import nixpkgs { inherit system; inherit overlays; };
+        });
+      in packagesForEachSystem ({ pkgs }: {
+        xonsh = pkgs.xonsh-with-env;
       });
 
       homeConfigurations = {
@@ -429,6 +439,7 @@
             ./modules/dev_elixir.nix
             ./modules/kubernetes.nix
             ./modules/python.nix
+            ./modules/xonsh.nix
             #./modules/notes_sync_mac.nix
             overlayModule
           ];
