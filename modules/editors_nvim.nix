@@ -12,7 +12,7 @@
     alias nvim="use-cloned-nvim-config-if-available"
   '';
 in {
-  home.packages = [ pkgs.neovim ];
+  home.packages = [ pkgs.neovim pkgs.neovim-remote ];
 
   home.file.".config/nvim-ro".source = pkgs.fetchFromGitHub {
     owner = "vivlim";

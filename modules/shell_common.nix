@@ -12,6 +12,7 @@
     git
     gitui
     lazygit
+    pkgs.writeShellScriptBin name ''
     tldr
     wget
     jq
@@ -57,6 +58,12 @@
       export PATH=$HOME/.nix-profile/bin:$PATH
     '';
   };
+
+  home.file.".config/lazygit/config.yml".text = (builtins.toJSON {
+    os = {
+      editPreset = "nvim";
+    };
+  });
 
   programs.starship = {
     enable = true;
