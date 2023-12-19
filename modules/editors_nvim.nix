@@ -14,7 +14,7 @@
 in {
   home.packages = [ pkgs.neovim ];
 
-  home.file.".config/nvim".source = pkgs.fetchFromGitHub {
+  home.file.".config/nvim-ro".source = pkgs.fetchFromGitHub {
     owner = "vivlim";
     repo = "vimfiles";
     rev =
@@ -26,8 +26,13 @@ in {
   home.sessionVariables = { EDITOR = "nvim"; };
 
   home.activation = {
-    installNeovimPlugins = home-manager.lib.hm.dag.entryAfter ["writeBoundary"] ''
-      ${pkgs.neovim}/bin/nvim +PlugInstall +qall
+    linkNeovimConfig = home-manager.lib.hm.dag.entryAfter ["writeBoundary"] ''
+      if [ -d ~/.config/nvim ]; then
+        echo "~/.config/nvim exists already"
+      else
+        echo "linking ~/.config/nvim to ~/.config/nvim-ro"
+        ln -s ~/.config/nvim-ro ~/.config/nvim
+      fi
     '';
   };
 
