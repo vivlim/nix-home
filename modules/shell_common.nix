@@ -64,9 +64,21 @@
     };
     confirmOnQuit = true;
     quitOnTopLevelReturn = true;
+    keybinding = {
+      universal = {
+        quit = "q"; # briefly tried setting this to <c-c> and turning off confirm, but I think I prefer having it on
+      };
+    };
     gui = {
       nerdFontsVersion = 3; # just guessing what version of nerd fonts I have
     };
+    git = {
+      disableForcePushing = true; # require force pushes to be done manually
+    };
+    update = {
+      method = "never"; # don't check for updates
+    };
+    promptToReturnFromSubprocess = false;
   });
 
   programs.starship = {
