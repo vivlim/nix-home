@@ -11,6 +11,7 @@
     p7zip
     git
     gitui
+    lazygit
     tldr
     wget
     jq
