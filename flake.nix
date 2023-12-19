@@ -50,7 +50,6 @@
         in ''
           ${prefix} nix --extra-experimental-features nix-command --extra-experimental-features flakes build ${extraOptionsString} ${repoPath}#homeConfigurations."${configName}".activationPackage && ./result/activate && unlink ./result'';
     in {
-
       homeConfigurations = {
         "vivlim@icebreaker-prime" = home-manager.lib.homeManagerConfiguration rec {
           system = "x86_64-linux";
@@ -328,7 +327,7 @@
             overlayModule
           ];
         };
-        "vivlim@mutServer" = let
+        "vivlim@server" = let
           system = "x86_64-linux";
         in home-manager.lib.homeManagerConfiguration rec {
           pkgs = import nixpkgs {
@@ -341,7 +340,7 @@
             inherit nil;
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
-                configName = "vivlim@mutServer";
+                configName = "vivlim@server";
                 repoPath = "/home/vivlim/git/nix-home";
               };
             };
