@@ -7,7 +7,7 @@
 
   home.activation = {
     linkLazygitConfig = home-manager.lib.hm.dag.entryAfter ["writeBoundary"] ''
-      if [ -d ~/Library/Application\ Support/lazygit/config.yml ]; then
+      if [ -f ~/Library/Application\ Support/lazygit/config.yml ]; then
         echo "~/Library/Application\ Support/lazygit/config.yml exists already"
       else
         echo "linking ~/Library/Application\ Support/lazygit/config.yml to ~/.config/lazygit/config.yml"

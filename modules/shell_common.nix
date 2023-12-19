@@ -64,6 +64,9 @@
     };
     confirmOnQuit = true;
     quitOnTopLevelReturn = true;
+    gui = {
+      nerdFontsVersion = 3; # just guessing what version of nerd fonts I have
+    };
   });
 
   programs.starship = {
