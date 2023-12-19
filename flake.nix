@@ -25,15 +25,20 @@
       url = "github:guibou/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nil = {
+      url = "github:oxalica/nil";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, unstable, nixpkgs-vivlim, home-manager, plasma-manager, sops-nix
-    , nixGL, ... }:
+    , nixGL, nil, ... }:
     let
       # configuration = { pkgs, ... }: { nix.package = pkgs.nixflakes; }; # doesn't do anything?
       overlay = final: prev: {
         unstable = unstable.legacyPackages.${prev.system};
         nixpkgs-vivlim = nixpkgs-vivlim.legacyPackages.${prev.system};
+        #nil = nil.${prev.system}.overlays.nil;
       } // (import ./modules/xonsh_override.nix prev);
       overlays = [ overlay ];
       # make pkgs.unstable available in configuration.nix
@@ -53,10 +58,11 @@
         devShellSupportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
         devShellForEachSupportedSystem = f: nixpkgs.lib.genAttrs devShellSupportedSystems (system: f {
           pkgs = import nixpkgs { inherit system; inherit overlays; };
+          inherit system;
         });
-      in devShellForEachSupportedSystem ({ pkgs }: {
+      in devShellForEachSupportedSystem ({ pkgs, system }: {
         default = pkgs.mkShell {
-          packages = with pkgs; [ nil nixfmt ];
+          packages = [ nil.packages."${system}".nil pkgs.nixfmt ];
         };
       });
 
@@ -456,7 +462,7 @@
         };
         "vivlim@macaroni-tome" = let
           system = "aarch64-darwin";
-        in home-manager.lib.homeManagerConfiguration rec {
+        in home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             inherit system;
           };
