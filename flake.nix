@@ -207,8 +207,12 @@
             overlayModule
           ];
         };
-        "vivlim@dev" = home-manager.lib.homeManagerConfiguration rec {
+        "vivlim@dev" = let
           system = "x86_64-linux";
+        in home-manager.lib.homeManagerConfiguration rec {
+          pkgs = import nixpkgs {
+            inherit system;
+          };
           extraSpecialArgs = {
             inherit nixpkgs;
             inherit home-manager;
@@ -220,13 +224,17 @@
               };
             };
           };
-          configuration = ./modules/shell_immutable.nix;
-          homeDirectory = "/home/vivlim";
-          username = "vivlim";
-          extraModules = [
+          modules = [
+            ({...}: {
+              home.username = "vivlim";
+              home.homeDirectory = "/home/vivlim";
+              home.stateVersion = "22.11";
+            })
+            ./modules/shell_immutable.nix
             ./modules/shell_common.nix
             ./modules/core.nix
             ./modules/containers.nix
+            ./modules/kubernetes.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
@@ -433,6 +441,7 @@
             ./modules/wayland.nix
             ./modules/core.nix
             ./modules/containers.nix
+            ./modules/kubernetes.nix
             ./modules/shell_mutable.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
