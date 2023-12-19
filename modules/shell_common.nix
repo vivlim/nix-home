@@ -11,9 +11,11 @@
     p7zip
     git
     gitui
+    lazygit
     tldr
     wget
     jq
+    jless
   ];
   programs.git = {
     enable = true;
@@ -63,7 +65,7 @@
     };
   };
 
-  home.shellAliases = { sentinel = "echo $SENTINEL"; } // bonusShellAliases;
+  home.shellAliases = { yless = "jless --yaml"; } // bonusShellAliases;
 
   # fsr my tmux config freezes tmate
   # home.file.".tmate.conf".text = ''

@@ -14,20 +14,25 @@
 in {
   home.packages = [ pkgs.neovim ];
 
-  home.file.".config/nvim".source = pkgs.fetchFromGitHub {
+  home.file.".config/nvim-ro".source = pkgs.fetchFromGitHub {
     owner = "vivlim";
     repo = "vimfiles";
     rev =
-      "a7cde6286723f42f540c03f5e87acf106d440551"; # #! ./_get_ref_commithash https://github.com/vivlim/vimfiles neovim
+      "99bdfe77c15cfc34a01772fe6829dede221e1b21"; # #! ./_get_ref_commithash https://github.com/vivlim/vimfiles neovim
     sha256 =
-      "sha256-DtBnzXjiFn5T9DbQuR5OJgl2lYutWJ6UwUOSFfS2Faw="; # #! ./_get_github_sha256 vivlim vimfiles neovim
+      "sha256-PlBdNYsv6BRMPrHyJ/neD7ZUCuUZfCQJUKJwuZuc2o0="; # #! ./_get_github_sha256 vivlim vimfiles neovim
   };
 
   home.sessionVariables = { EDITOR = "nvim"; };
 
   home.activation = {
-    installNeovimPlugins = home-manager.lib.hm.dag.entryAfter ["writeBoundary"] ''
-      ${pkgs.neovim}/bin/nvim +PlugInstall +qall
+    linkNeovimConfig = home-manager.lib.hm.dag.entryAfter ["writeBoundary"] ''
+      if [ -d ~/.config/nvim ]; then
+        echo "~/.config/nvim exists already"
+      else
+        echo "linking ~/.config/nvim to ~/.config/nvim-ro"
+        ln -s ~/.config/nvim-ro ~/.config/nvim
+      fi
     '';
   };
 
