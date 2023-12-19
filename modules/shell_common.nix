@@ -12,7 +12,6 @@
     git
     gitui
     lazygit
-    pkgs.writeShellScriptBin name ''
     tldr
     wget
     jq
