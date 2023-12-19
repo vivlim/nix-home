@@ -234,6 +234,7 @@
             ./modules/shell_common.nix
             ./modules/core.nix
             ./modules/containers.nix
+            ./modules/kubernetes.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
@@ -440,6 +441,7 @@
             ./modules/wayland.nix
             ./modules/core.nix
             ./modules/containers.nix
+            ./modules/kubernetes.nix
             ./modules/shell_mutable.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
