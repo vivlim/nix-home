@@ -62,6 +62,8 @@
     os = {
       editPreset = "nvim";
     };
+    confirmOnQuit = true;
+    quitOnTopLevelReturn = true;
   });
 
   programs.starship = {
