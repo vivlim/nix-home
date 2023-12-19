@@ -432,6 +432,7 @@
             ./modules/shell_common.nix
             ./modules/wayland.nix
             ./modules/core.nix
+            ./modules/containers.nix
             ./modules/shell_mutable.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
