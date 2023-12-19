@@ -64,7 +64,7 @@
     };
   };
 
-  home.shellAliases = { sentinel = "echo $SENTINEL"; } // bonusShellAliases;
+  home.shellAliases = { yless = "jless --yaml"; } // bonusShellAliases;
 
   # fsr my tmux config freezes tmate
   # home.file.".tmate.conf".text = ''

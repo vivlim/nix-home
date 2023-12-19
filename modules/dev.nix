@@ -1,6 +1,7 @@
 { pkgs, system, channels, bonusShellAliases, ... }: {
-  home.packages = [
-    pkgs.direnv
+  home.packages = with pkgs; [
+    direnv
+    cmake
   ];
   programs.direnv.enable = true;
 }
