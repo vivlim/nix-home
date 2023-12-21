@@ -3,7 +3,7 @@
     direnv
     cmake
     lua-language-server
-    bash-language-server
+    #bash-language-server
   ];
   programs.direnv.enable = true;
 }
