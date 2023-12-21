@@ -457,6 +457,7 @@
             ./modules/dev_nix.nix
             ./modules/gui_art.nix
             ./modules/gui_media.nix
+            ./modules/gui_misc.nix
             overlayModule
           ];
         };
