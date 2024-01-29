@@ -15,7 +15,9 @@
     tldr
     wget
     jq
+    xq-xml
     jless
+    rnr # renamer https://github.com/ismaelgv/rnr
   ];
   programs.git = {
     enable = true;
