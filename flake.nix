@@ -522,25 +522,32 @@
         };
       };
       nixosModules = {
-        "vivlim@dev" = home-manager.nixosModules.home-manager {
-          imports = [
-            ({...}: {
-              home.username = "vivlim";
-              home.homeDirectory = "/home/vivlim";
-              home.stateVersion = "22.11";
-            })
-            ./modules/shell_immutable.nix
-            ./modules/shell_common.nix
-            ./modules/core.nix
-            ./modules/containers.nix
-            ./modules/kubernetes.nix
-            ./modules/tmux.nix
-            ./modules/editors_nvim.nix
-            ./modules/editors_helix.nix
-            ./modules/dev.nix
-            ./modules/dev_nix.nix
-            overlayModule
-          ];
+        "vivlim@dev" = { system, ... }: home-manager.nixosModules.home-manager {
+          pkgs = import nixpkgs {
+            inherit system;
+          };
+          config = {
+            home-manager.users.vivlim = {...}: {
+              imports = [
+                ({...}: {
+                  home.username = "vivlim";
+                  home.homeDirectory = "/home/vivlim";
+                  home.stateVersion = "22.11";
+                })
+                ./modules/shell_immutable.nix
+                ./modules/shell_common.nix
+                ./modules/core.nix
+                ./modules/containers.nix
+                ./modules/kubernetes.nix
+                ./modules/tmux.nix
+                ./modules/editors_nvim.nix
+                ./modules/editors_helix.nix
+                ./modules/dev.nix
+                ./modules/dev_nix.nix
+                overlayModule
+              ];
+            };
+          };
         };
       };
     };
