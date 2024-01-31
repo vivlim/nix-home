@@ -522,11 +522,7 @@
         };
       };
       nixosModules = {
-        "vivlim@dev" = { system, ... }: home-manager.nixosModules.home-manager {
-          pkgs = import nixpkgs {
-            inherit system;
-          };
-          lib = nixpkgs.lib;
+        "vivlim@dev" = home-manager.nixosModules.home-manager {
           config = {
             home-manager.users.vivlim = {...}: {
               imports = [
