@@ -526,6 +526,7 @@
           pkgs = import nixpkgs {
             inherit system;
           };
+          lib = nixpkgs.lib;
           config = {
             home-manager.users.vivlim = {...}: {
               imports = [
