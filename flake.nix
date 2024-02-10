@@ -39,7 +39,8 @@
         unstable = unstable.legacyPackages.${prev.system};
         nixpkgs-vivlim = nixpkgs-vivlim.legacyPackages.${prev.system};
         #nil = nil.${prev.system}.overlays.nil;
-      } // (import ./modules/xonsh_override.nix prev);
+      } // (import ./modules/xonsh_override.nix prev)
+        // (import ./modules/nixrb.nix prev);
       overlays = [ overlay ];
       # make pkgs.unstable available in configuration.nix
       overlayModule =
@@ -73,6 +74,8 @@
         });
       in packagesForEachSystem ({ pkgs }: {
         xonsh = pkgs.xonsh-with-env;
+        duc = pkgs.duc;
+        nixrb = pkgs.viv-nixrb;
       });
 
       homeConfigurations = {
