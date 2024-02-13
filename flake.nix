@@ -84,6 +84,7 @@
         nixrb = pkgs.viv-nixrb;
         rep-lua = pkgs.rep-lua;
         luarocks-nix = pkgs.luarocks-nix;
+        nixpkgs = pkgs;
       });
 
       homeConfigurations = {
