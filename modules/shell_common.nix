@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     htop
     fd
+    fzf
     nix-prefetch
     sops
     starship
@@ -10,7 +11,6 @@
     ncdu
     p7zip
     git
-    gitui
     lazygit
     tldr
     wget
@@ -18,6 +18,9 @@
     xq-xml
     jless
     rnr # renamer https://github.com/ismaelgv/rnr
+    yazi # file manager
+    unar # unarchiver
+    xkcdpass
   ];
   programs.git = {
     enable = true;
