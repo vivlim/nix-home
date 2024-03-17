@@ -122,7 +122,7 @@
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@icebreaker-prime";
-                repoPath = "/home/vivlim/git/nix-home";
+                repoPath = "/home/vivlim/nix-workspace/nix-home";
               };
             };
           };
@@ -139,6 +139,7 @@
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
+            ./modules/editors_vscode.nix
             ./modules/dev.nix
             ./modules/dev_nix.nix
             ./modules/atuin.nix
