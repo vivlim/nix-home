@@ -135,6 +135,7 @@
             ./modules/shell_immutable.nix
             ./modules/shell_common.nix
             ./modules/core.nix
+            ./modules/containers.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
