@@ -1,7 +1,7 @@
 { config, pkgs, lib, system, bonusShellAliases ? {}, ... }: {
   sops = {
     age.sshKeyPaths = [ "/home/vivlim/.ssh/id_ed25519_sops" ];
-    defaultSopsFile = ../secrets.yaml;
+    defaultSopsFile = ../secrets/secrets.yaml;
     secrets.test = {
       # sopsFile = ./secrets.yml.enc; # optionally define per-secret files
 

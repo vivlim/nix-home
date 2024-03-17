@@ -121,7 +121,7 @@
             inherit system;
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
-                configName = "vivlim@generic-nixos";
+                configName = "vivlim@icebreaker-prime";
                 repoPath = "/home/vivlim/git/nix-home";
               };
             };
@@ -140,8 +140,9 @@
             ./modules/editors_helix.nix
             ./modules/dev.nix
             ./modules/dev_nix.nix
-            inputs.sops-nix.homeManagerModules.sops
+            ./modules/atuin.nix
             ./modules/sops.nix
+            inputs.sops-nix.homeManagerModules.sops
             overlayModule
           ];
         };
@@ -282,6 +283,9 @@
             ./modules/editors_helix.nix
             ./modules/dev.nix
             ./modules/dev_nix.nix
+            ./modules/atuin.nix
+            ./modules/sops.nix
+            inputs.sops-nix.homeManagerModules.sops
             overlayModule
           ];
         };

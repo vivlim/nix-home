@@ -8,7 +8,7 @@
       keymap_mode = "vim-insert"; # esc switches to 'normal' mode
       style = "auto";
       inline_height = 40;
-      key_path = config.sops.secrets.atuin_key.path;
+      key_path = "$XDG_RUNTIME_DIR/secrets/atuin_key"; #config.sops.secrets.atuin_key.path;
     };
   };
 
