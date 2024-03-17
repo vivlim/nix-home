@@ -41,7 +41,16 @@
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
-
+  };
+  programs.atuin = {
+    enable = true;
+    settings = {
+      update_check = false;
+      prefers_reduced_motion = true;
+      keymap_mode = "vim-insert"; # esc switches to 'normal' mode
+      style = "auto";
+      inline_height = 40;
+    };
   };
   home.file.".nix_hm/bashrc" = {
     text = ''
