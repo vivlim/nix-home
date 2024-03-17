@@ -6,14 +6,12 @@
   # todo: clean up all configs - username / homedirectory move into a module, extraModules becomes modules. etc
 
   inputs = { # update a single input; nix flake lock --update-input unstable
-    nixpkgs = { url = "github:NixOS/nixpkgs/release-23.11"; };
-    unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-vivlim.url = "github:vivlim/nixpkgs/mastodon-fixes-on-unstable";
-    #nixpkgs-vivlim.url = "path:/home/vivlim/git/viv_nixpkgs";
+    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-unstable"; };
+    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     plasma-manager = {
@@ -25,20 +23,14 @@
       url = "github:guibou/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nil = {
-      url = "github:oxalica/nil";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = inputs@{ self, nixpkgs, unstable, nixpkgs-vivlim, home-manager, plasma-manager, sops-nix
-    , nixGL, nil, ... }:
+  outputs = inputs@{ self, nixpkgs, unstable, home-manager, plasma-manager, sops-nix
+    , nixGL, ... }:
     let
       # configuration = { pkgs, ... }: { nix.package = pkgs.nixflakes; }; # doesn't do anything?
       overlay = final: prev: {
         unstable = unstable.legacyPackages.${prev.system};
-        nixpkgs-vivlim = nixpkgs-vivlim.legacyPackages.${prev.system};
-        #nil = nil.${prev.system}.overlays.nil;
       } // (import ./modules/xonsh_override.nix prev);
       overlays = [ overlay ];
       # make pkgs.unstable available in configuration.nix
@@ -62,7 +54,7 @@
         });
       in devShellForEachSupportedSystem ({ pkgs, system }: {
         default = pkgs.mkShell {
-          packages = [ nil.packages."${system}".nil pkgs.nixfmt ];
+          packages = [ pkgs.nil pkgs.nixfmt ];
         };
       });
 
