@@ -361,6 +361,7 @@
             ./modules/core.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
+            ./modules/editors_vscode.nix
             ./modules/dev.nix
             ./modules/dev_nix.nix
             #./modules/gui_chat.nix
