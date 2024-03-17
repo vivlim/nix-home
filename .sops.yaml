@@ -1,0 +1,8 @@
+keys:
+  - &icebreaker_prime age1nz7jasrdthud2cq3dyaegp4m2krnj2ndavvp2yckvwhgw5k3seyqfqfjcf
+
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - age:
+      - *icebreaker_prime
