@@ -68,7 +68,7 @@
       });
 
       homeConfigurations = {
-        "vivlim@icebreaker-prime" = home-manager.lib.homeManagerConfiguration rec {
+        "vivlim@icebreaker-prime-old" = home-manager.lib.homeManagerConfiguration rec {
           system = "x86_64-linux";
           extraSpecialArgs = {
             inherit nixpkgs;
@@ -106,6 +106,42 @@
             ./plasma
             ./plasma/plasma-manager-config.nix # captured using `nix run github:pjones/plasma-manager`
             plasma-manager.homeManagerModules.plasma-manager
+            overlayModule
+          ];
+        };
+        "vivlim@icebreaker-prime" = let
+          system = "x86_64-linux";
+	in home-manager.lib.homeManagerConfiguration rec {
+          pkgs = import nixpkgs {
+            inherit system;
+          };
+          extraSpecialArgs = {
+            inherit nixpkgs;
+            inherit home-manager;
+            inherit system;
+            bonusShellAliases = {
+              nixrb = nixHomeManagerRebuildCommand {
+                configName = "vivlim@generic-nixos";
+                repoPath = "/home/vivlim/git/nix-home";
+              };
+            };
+          };
+          modules = [
+            ({...}: {
+              home.username = "vivlim";
+              home.homeDirectory = "/home/vivlim";
+              home.stateVersion = "22.11";
+            })
+            ./modules/shell_immutable.nix
+            ./modules/shell_common.nix
+            ./modules/core.nix
+            ./modules/tmux.nix
+            ./modules/editors_nvim.nix
+            ./modules/editors_helix.nix
+            ./modules/dev.nix
+            ./modules/dev_nix.nix
+            inputs.sops-nix.homeManagerModules.sops
+            ./modules/sops.nix
             overlayModule
           ];
         };
@@ -209,6 +245,7 @@
             ./modules/editors_helix.nix
             ./modules/dev.nix
             ./modules/dev_nix.nix
+            inputs.sops-nix.homeManagerModules.sops
             overlayModule
           ];
         };
