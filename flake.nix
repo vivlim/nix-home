@@ -388,6 +388,7 @@
                 imagemagick
                 exiftool
               ];
+              usePatchedVlc = true;
             })
             ./modules/shell_immutable.nix
             ./modules/shell_common.nix
@@ -398,7 +399,7 @@
             ./modules/dev.nix
             ./modules/dev_nix.nix
             #./modules/gui_chat.nix
-            #./modules/gui_media.nix
+            ./modules/gui_media.nix
             #./modules/gui_misc.nix
             overlayModule
           ];
