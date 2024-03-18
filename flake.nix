@@ -488,6 +488,7 @@
             ./modules/shell_mutable.nix
             ./modules/tmux.nix
             ./mac.nix
+            ./modules/social.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
             ./modules/dev.nix
