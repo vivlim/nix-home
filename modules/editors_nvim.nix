@@ -18,9 +18,9 @@ in {
     owner = "vivlim";
     repo = "vimfiles";
     rev =
-      "2c74749e679bfd22cf32ebbe4f46eb6e0b5330e7"; # #! ./_get_ref_commithash https://github.com/vivlim/vimfiles neovim
+      "3458c0517d85d3957021f0413de7769c5f3d4fcc"; # #! ./_get_ref_commithash https://github.com/vivlim/vimfiles neovim
     sha256 =
-      "sha256-tRyhP2s0fZ7s35Ti2k7zcBoZNsRLibBMoOEBUfHhxhY="; # #! ./_get_github_sha256 vivlim vimfiles neovim
+      "sha256-+9+QAMMTEbJH1ILah8M/YgFPMdZJT7dKCdM8aJ3Pvwk="; # #! ./_get_github_sha256 vivlim vimfiles neovim
   };
 
   home.sessionVariables = { EDITOR = "nvim"; };

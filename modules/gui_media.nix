@@ -1,6 +1,6 @@
 { pkgs, system, channels, bonusShellAliases, ... }: {
   home.packages = with pkgs; [
-    obs-studio
+    #obs-studio
     ffmpeg
     vlc
     deadbeef

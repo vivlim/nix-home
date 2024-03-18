@@ -6,14 +6,12 @@
   # todo: clean up all configs - username / homedirectory move into a module, extraModules becomes modules. etc
 
   inputs = { # update a single input; nix flake lock --update-input unstable
-    nixpkgs = { url = "github:NixOS/nixpkgs/release-23.11"; };
-    unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-vivlim.url = "github:vivlim/nixpkgs/mastodon-fixes-on-unstable";
-    #nixpkgs-vivlim.url = "path:/home/vivlim/git/viv_nixpkgs";
+    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-unstable"; };
+    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     plasma-manager = {
@@ -25,20 +23,14 @@
       url = "github:guibou/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nil = {
-      url = "github:oxalica/nil";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = inputs@{ self, nixpkgs, unstable, nixpkgs-vivlim, home-manager, plasma-manager, sops-nix
-    , nixGL, nil, ... }:
+  outputs = inputs@{ self, nixpkgs, unstable, home-manager, plasma-manager, sops-nix
+    , nixGL, ... }:
     let
       # configuration = { pkgs, ... }: { nix.package = pkgs.nixflakes; }; # doesn't do anything?
       overlay = final: prev: {
         unstable = unstable.legacyPackages.${prev.system};
-        nixpkgs-vivlim = nixpkgs-vivlim.legacyPackages.${prev.system};
-        #nil = nil.${prev.system}.overlays.nil;
       } // (import ./modules/xonsh_override.nix prev);
       overlays = [ overlay ];
       # make pkgs.unstable available in configuration.nix
@@ -62,7 +54,7 @@
         });
       in devShellForEachSupportedSystem ({ pkgs, system }: {
         default = pkgs.mkShell {
-          packages = [ nil.packages."${system}".nil pkgs.nixfmt ];
+          packages = [ pkgs.nil pkgs.nixfmt ];
         };
       });
 
@@ -76,7 +68,7 @@
       });
 
       homeConfigurations = {
-        "vivlim@icebreaker-prime" = home-manager.lib.homeManagerConfiguration rec {
+        "vivlim@icebreaker-prime-old" = home-manager.lib.homeManagerConfiguration rec {
           system = "x86_64-linux";
           extraSpecialArgs = {
             inherit nixpkgs;
@@ -114,6 +106,44 @@
             ./plasma
             ./plasma/plasma-manager-config.nix # captured using `nix run github:pjones/plasma-manager`
             plasma-manager.homeManagerModules.plasma-manager
+            overlayModule
+          ];
+        };
+        "vivlim@icebreaker-prime" = let
+          system = "x86_64-linux";
+	in home-manager.lib.homeManagerConfiguration rec {
+          pkgs = import nixpkgs {
+            inherit system;
+          };
+          extraSpecialArgs = {
+            inherit nixpkgs;
+            inherit home-manager;
+            inherit system;
+            bonusShellAliases = {
+              nixrb = nixHomeManagerRebuildCommand {
+                configName = "vivlim@icebreaker-prime";
+                repoPath = "/home/vivlim/git/nix-home";
+              };
+            };
+          };
+          modules = [
+            ({...}: {
+              home.username = "vivlim";
+              home.homeDirectory = "/home/vivlim";
+              home.stateVersion = "22.11";
+            })
+            ./modules/shell_immutable.nix
+            ./modules/shell_common.nix
+            ./modules/core.nix
+            ./modules/containers.nix
+            ./modules/tmux.nix
+            ./modules/editors_nvim.nix
+            ./modules/editors_helix.nix
+            ./modules/dev.nix
+            ./modules/dev_nix.nix
+            ./modules/atuin.nix
+            ./modules/sops.nix
+            inputs.sops-nix.homeManagerModules.sops
             overlayModule
           ];
         };
@@ -186,8 +216,12 @@
             ];
           };
 
-        "vivlim@generic-nixos" = home-manager.lib.homeManagerConfiguration rec {
+        "vivlim@generic-nixos" = let
           system = "x86_64-linux";
+	in home-manager.lib.homeManagerConfiguration rec {
+          pkgs = import nixpkgs {
+            inherit system;
+          };
           extraSpecialArgs = {
             inherit nixpkgs;
             inherit home-manager;
@@ -199,10 +233,13 @@
               };
             };
           };
-          configuration = ./modules/shell_immutable.nix;
-          homeDirectory = "/home/vivlim";
-          username = "vivlim";
-          extraModules = [
+          modules = [
+            ({...}: {
+              home.username = "vivlim";
+              home.homeDirectory = "/home/vivlim";
+              home.stateVersion = "22.11";
+            })
+            ./modules/shell_immutable.nix
             ./modules/shell_common.nix
             ./modules/core.nix
             ./modules/tmux.nix
@@ -210,6 +247,7 @@
             ./modules/editors_helix.nix
             ./modules/dev.nix
             ./modules/dev_nix.nix
+            inputs.sops-nix.homeManagerModules.sops
             overlayModule
           ];
         };
@@ -246,6 +284,9 @@
             ./modules/editors_helix.nix
             ./modules/dev.nix
             ./modules/dev_nix.nix
+            ./modules/atuin.nix
+            ./modules/sops.nix
+            inputs.sops-nix.homeManagerModules.sops
             overlayModule
           ];
         };
@@ -319,8 +360,12 @@
             overlayModule
           ];
         };
-        "vivlim@gui" = home-manager.lib.homeManagerConfiguration rec {
+        "vivlim@gui" = let
           system = "x86_64-linux";
+        in home-manager.lib.homeManagerConfiguration rec {
+          pkgs = import nixpkgs {
+            inherit system;
+          };
           extraSpecialArgs = {
             inherit nixpkgs;
             inherit home-manager;
@@ -334,20 +379,28 @@
               };
             };
           };
-          configuration = ./modules/shell_immutable.nix;
-          homeDirectory = "/home/vivlim";
-          username = "vivlim";
-          extraModules = [
+          modules = [
+            ({...}: {
+              home.username = "vivlim";
+              home.homeDirectory = "/home/vivlim";
+              home.stateVersion = "22.11";
+              home.packages = with pkgs; [
+                ffmpeg
+                imagemagick
+                exiftool
+              ];
+            })
+            ./modules/shell_immutable.nix
             ./modules/shell_common.nix
             ./modules/core.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
-            ./modules/editors_helix.nix
+            ./modules/editors_vscode.nix
             ./modules/dev.nix
             ./modules/dev_nix.nix
-            ./modules/gui_chat.nix
-            ./modules/gui_media.nix
-            ./modules/gui_misc.nix
+            #./modules/gui_chat.nix
+            #./modules/gui_media.nix
+            #./modules/gui_misc.nix
             overlayModule
           ];
         };
@@ -457,6 +510,7 @@
             ./modules/dev_nix.nix
             ./modules/gui_art.nix
             ./modules/gui_media.nix
+            ./modules/gui_misc.nix
             overlayModule
           ];
         };
@@ -503,5 +557,21 @@
           ];
         };
       };
+      nixosModuleImports = [
+        ({...}: {
+          home.username = "vivlim";
+          home.homeDirectory = "/home/vivlim";
+          home.stateVersion = "22.11";
+        })
+        ./modules/shell_immutable.nix
+        ./modules/shell_common.nix
+        ./modules/core.nix
+        ./modules/containers.nix
+        ./modules/kubernetes.nix
+        ./modules/tmux.nix
+        ./modules/editors_nvim.nix
+        ./modules/dev.nix
+        ./modules/dev_nix.nix
+      ];
     };
 }
