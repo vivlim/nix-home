@@ -23,15 +23,20 @@
       url = "github:guibou/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    android-nixpkgs = {
+      url = "github:tadfisher/android-nixpkgs/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, unstable, home-manager, plasma-manager, sops-nix
-    , nixGL, ... }:
+    , nixGL, android-nixpkgs, ... }:
     let
       # configuration = { pkgs, ... }: { nix.package = pkgs.nixflakes; }; # doesn't do anything?
       overlay = final: prev: {
         unstable = unstable.legacyPackages.${prev.system};
-      } // (import ./modules/xonsh_override.nix prev);
+      }
+      // (import ./modules/xonsh_override.nix prev);
       overlays = [ overlay ];
       # make pkgs.unstable available in configuration.nix
       overlayModule =
@@ -65,6 +70,7 @@
         });
       in packagesForEachSystem ({ pkgs }: {
         xonsh = pkgs.xonsh-with-env;
+        android-sdk = pkgs.android-sdk;
       });
 
       homeConfigurations = {
@@ -135,6 +141,7 @@
             ./modules/shell_immutable.nix
             ./modules/shell_common.nix
             ./modules/core.nix
+            ./modules/containers.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
@@ -524,6 +531,7 @@
             inherit nixpkgs;
             inherit home-manager;
             inherit system;
+            inherit inputs;
             bonusShellAliases = {
               nixrb = nixHomeManagerRebuildCommand {
                 configName = "vivlim@macaroni-tome";
@@ -542,6 +550,7 @@
             ./modules/shell_mutable.nix
             ./modules/tmux.nix
             ./mac.nix
+            ./modules/social.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
             ./modules/dev.nix
@@ -551,6 +560,7 @@
             ./modules/kubernetes.nix
             ./modules/python.nix
             ./modules/xonsh.nix
+            ./modules/android-sdk.nix
             #./modules/notes_sync_mac.nix
             overlayModule
           ];
