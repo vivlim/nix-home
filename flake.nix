@@ -140,6 +140,7 @@
             })
             ./modules/shell_immutable.nix
             ./modules/shell_common.nix
+            ./modules/shell_uncommon.nix
             ./modules/core.nix
             ./modules/containers.nix
             ./modules/tmux.nix
@@ -283,6 +284,7 @@
             })
             ./modules/shell_immutable.nix
             ./modules/shell_common.nix
+            ./modules/shell_uncommon.nix
             ./modules/core.nix
             ./modules/containers.nix
             ./modules/kubernetes.nix
@@ -400,6 +402,7 @@
             })
             ./modules/shell_immutable.nix
             ./modules/shell_common.nix
+            ./modules/shell_uncommon.nix
             ./modules/core.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
@@ -549,6 +552,7 @@
             ./modules/core.nix
             ./modules/shell_common.nix
             ./modules/shell_mutable.nix
+            ./modules/shell_uncommon.nix
             ./modules/tmux.nix
             ./mac.nix
             ./modules/social.nix
