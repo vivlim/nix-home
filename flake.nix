@@ -299,7 +299,44 @@
             overlayModule
           ];
         };
-        "vivlim@devarm" = home-manager.lib.homeManagerConfiguration rec { # i need to reconcile this
+        "vivlim@devarm" = let
+          system = "aarch64-linux";
+        in home-manager.lib.homeManagerConfiguration rec {
+          pkgs = import nixpkgs {
+            inherit system;
+          };
+          extraSpecialArgs = {
+            inherit nixpkgs;
+            inherit home-manager;
+            inherit system;
+            bonusShellAliases = {
+              nixrb = nixHomeManagerRebuildCommand {
+                configName = "vivlim@devarm";
+                repoPath = "/home/vivlim/git/nix-home";
+              };
+            };
+          };
+          modules = [
+            ({...}: {
+              home.username = "vivlim";
+              home.homeDirectory = "/home/vivlim";
+              home.stateVersion = "24.05";
+            })
+            ./modules/shell_immutable.nix
+            ./modules/shell_common.nix
+            ./modules/shell_uncommon.nix
+            ./modules/core.nix
+            ./modules/tmux.nix
+            ./modules/editors_nvim.nix
+            ./modules/dev.nix
+            ./modules/dev_nix.nix
+            #./modules/atuin.nix
+            #./modules/sops.nix
+            #inputs.sops-nix.homeManagerModules.sops
+            overlayModule
+          ];
+        };
+        "vivlim@devarmold" = home-manager.lib.homeManagerConfiguration rec { # i need to reconcile this
           system = "aarch64-linux";
           extraSpecialArgs = {
             inherit nixpkgs;
