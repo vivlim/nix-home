@@ -293,6 +293,7 @@
             ./modules/editors_helix.nix
             ./modules/dev.nix
             ./modules/dev_nix.nix
+            ./modules/dev_uv.nix
             ./modules/atuin.nix
             ./modules/sops.nix
             inputs.sops-nix.homeManagerModules.sops
