@@ -287,7 +287,7 @@
             ./modules/shell_uncommon.nix
             ./modules/core.nix
             ./modules/containers.nix
-            ./modules/kubernetes.nix
+            #./modules/kubernetes.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
             ./modules/editors_helix.nix
@@ -549,7 +549,7 @@
             ./modules/wayland.nix
             ./modules/core.nix
             ./modules/containers.nix
-            ./modules/kubernetes.nix
+            #./modules/kubernetes.nix
             ./modules/shell_mutable.nix
             ./modules/tmux.nix
             ./modules/editors_nvim.nix
@@ -560,6 +560,47 @@
             ./modules/gui_art.nix
             ./modules/gui_media.nix
             ./modules/gui_misc.nix
+            overlayModule
+          ];
+        };
+        "vivlim@thunkpad" = let
+          system = "x86_64-linux";
+        in home-manager.lib.homeManagerConfiguration rec {
+          pkgs = import nixpkgs {
+            inherit system;
+          };
+          extraSpecialArgs = {
+            inherit nixpkgs;
+            inherit home-manager;
+            inherit system;
+            bonusShellAliases = {
+              nixrb = nixHomeManagerRebuildCommand {
+                configName = "vivlim@thunkpad";
+                repoPath = "/home/vivlim/git/nix-home";
+              };
+            };
+          };
+          modules = [
+            ({...}: {
+              home.username = "vivlim";
+              home.homeDirectory = "/home/vivlim";
+              home.stateVersion = "22.11";
+            })
+            ./modules/shell_common.nix
+            #./modules/wayland.nix
+            ./modules/core.nix
+            ./modules/containers.nix
+            #./modules/kubernetes.nix
+            ./modules/shell_mutable.nix
+            ./modules/tmux.nix
+            ./modules/editors_nvim.nix
+            ./modules/xonsh.nix
+            ./modules/powershell.nix
+            ./modules/dev.nix
+            ./modules/dev_nix.nix
+            #./modules/gui_art.nix
+            #./modules/gui_media.nix
+            #./modules/gui_misc.nix
             overlayModule
           ];
         };
